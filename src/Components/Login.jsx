@@ -22,8 +22,10 @@ const Login = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                // Save the token or handle successful login
+                // Save the token (you can store it in localStorage or state if needed)
                 console.log("Login successful:", data);
+                // Redirect to the home page after successful login
+                navigate("/home");
             } else if (response.status === 404) {
                 setLoginError("User not found");
             } else {
@@ -77,4 +79,3 @@ const Login = () => {
 };
 
 export default Login;
-

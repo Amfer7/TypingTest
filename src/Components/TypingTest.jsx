@@ -158,22 +158,38 @@ const TypingTest = () => {
         <div className="typing-text">
           <p>
             {text.map((item, index) => (
-              <span key={index} className={index === charIndex ? 'active' : item.class}>
+              <span 
+                key={index} 
+                className={index === charIndex ? 'current-char' : item.class}
+              >
                 {item.char}
               </span>
             ))}
           </p>
         </div>
-        <div className="content">
-          <ul className="result-details">
-            <li className="time">
-              <p>Time Left:</p>
-              <span><b>{timeLeft}</b>s</span>
-            </li>
-          </ul>
-          {timeLeft === 0 && <button onClick={seeResults}>See Results</button>}
-          <button onClick={resetGame}>Try Again</button>
 
+        <div className="stats">
+          <div className="stat">
+            <h3>Time Left</h3>
+            <p>{timeLeft}s</p>
+          </div>
+          <div className="stat">
+            <h3>WPM</h3>
+            <p>{wpm}</p>
+          </div>
+          <div className="stat">
+            <h3>Accuracy</h3>
+            <p>{accuracy}%</p>
+          </div>
+          <div className="stat">
+            <h3>Mistakes</h3>
+            <p>{mistakes}</p>
+          </div>
+        </div>
+
+        <div className="actions">
+          <button onClick={resetGame} className="reset-btn">Reset</button>
+          <button onClick={seeResults} className="results-btn">See Results</button>
         </div>
       </div>
     </div>

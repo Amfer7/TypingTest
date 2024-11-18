@@ -30,22 +30,29 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(400).send('Incorrect Username or Password!');
+    console.log('Request Body:', req.body);  // Log the incoming request body
+
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Missing username or password' });
     }
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(400).send('Incorrect Username or Password!');
+
+    try {
+        const user = await User.findOne({ username });
+        if (!user || !await user.comparePassword(password)) {
+            return res.status(400).json({ message: 'Incorrect Username or Password!' });
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
+        res.status(200).json({ token });
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Server error' });
     }
-    const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
-    res.status(200).send({ token });
-  } catch (error) {
-    res.status(500).send('Server error');
-  }
 });
+
+
+
 
 app.post('/results', async (req, res) => {
   const { userId, wpm, mistakes, accuracy } = req.body;
@@ -79,3 +86,20 @@ app.get('/results/:userId', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+app.get('/api/leaderboard', async (req, res) => {
+    try {
+      const leaderboard = await Result.aggregate([
+        { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'user' }},
+        { $unwind: '$user' },
+        { $project: { username: '$user.username', wpm: { $max: '$tests.wpm' } }},  // Get the highest wpm
+        { $sort: { wpm: -1 }},  // Sort by wpm in descending order
+        { $limit: 10 }  // Limit to top 10 users
+      ]);
+  
+      res.status(200).send(leaderboard);
+    } catch (error) {
+      res.status(500).send('Error fetching leaderboard');
+    }
+  });
+  
