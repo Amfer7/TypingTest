@@ -125,9 +125,25 @@ const TypingTest = () => {
     inputRef.current.value = "";
   };
   
-  const seeResults = () => {
-    navigate('results', { state: { wpm, mistakes, accuracy } });
-  }
+  const seeResults = async () => {
+    const result = { wpm, mistakes, accuracy };
+    try {
+      const response = await fetch('http://localhost:5000/results', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(result)
+      });
+      if (response.ok) {
+        navigate('results', { state: { wpm, mistakes, accuracy } });
+      } else {
+        console.error('Failed to save results');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   
   return (
     <div className="wrapper">

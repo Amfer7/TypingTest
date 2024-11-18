@@ -1,0 +1,72 @@
+[
+  {
+    "userId": "60d0fe4f5311236168a109ca",
+    "tests": [
+      { "wpm": 50, "mistakes": 5, "accuracy": 90, "date": "2023-10-01T10:00:00Z" },
+      { "wpm": 55, "mistakes": 4, "accuracy": 92, "date": "2023-10-02T10:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109cb",
+    "tests": [
+      { "wpm": 60, "mistakes": 3, "accuracy": 95, "date": "2023-10-01T11:00:00Z" },
+      { "wpm": 62, "mistakes": 2, "accuracy": 96, "date": "2023-10-02T11:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109cc",
+    "tests": [
+      { "wpm": 45, "mistakes": 6, "accuracy": 88, "date": "2023-10-01T12:00:00Z" },
+      { "wpm": 47, "mistakes": 5, "accuracy": 89, "date": "2023-10-02T12:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109cd",
+    "tests": [
+      { "wpm": 70, "mistakes": 2, "accuracy": 97, "date": "2023-10-01T13:00:00Z" },
+      { "wpm": 72, "mistakes": 1, "accuracy": 98, "date": "2023-10-02T13:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109ce",
+    "tests": [
+      { "wpm": 65, "mistakes": 3, "accuracy": 94, "date": "2023-10-01T14:00:00Z" },
+      { "wpm": 67, "mistakes": 2, "accuracy": 95, "date": "2023-10-02T14:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109cf",
+    "tests": [
+      { "wpm": 55, "mistakes": 4, "accuracy": 92, "date": "2023-10-01T15:00:00Z" },
+      { "wpm": 57, "mistakes": 3, "accuracy": 93, "date": "2023-10-02T15:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109d0",
+    "tests": [
+      { "wpm": 50, "mistakes": 5, "accuracy": 90, "date": "2023-10-01T16:00:00Z" },
+      { "wpm": 52, "mistakes": 4, "accuracy": 91, "date": "2023-10-02T16:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109d1",
+    "tests": [
+      { "wpm": 60, "mistakes": 3, "accuracy": 95, "date": "2023-10-01T17:00:00Z" },
+      { "wpm": 62, "mistakes": 2, "accuracy": 96, "date": "2023-10-02T17:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109d2",
+    "tests": [
+      { "wpm": 65, "mistakes": 3, "accuracy": 94, "date": "2023-10-01T18:00:00Z" },
+      { "wpm": 67, "mistakes": 2, "accuracy": 95, "date": "2023-10-02T18:00:00Z" }
+    ]
+  },
+  {
+    "userId": "60d0fe4f5311236168a109d3",
+    "tests": [
+      { "wpm": 70, "mistakes": 2, "accuracy": 97, "date": "2023-10-01T19:00:00Z" },
+      { "wpm": 72, "mistakes": 1, "accuracy": 98, "date": "2023-10-02T19:00:00Z" }
+    ]
+  }
+]

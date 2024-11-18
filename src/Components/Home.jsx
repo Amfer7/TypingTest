@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './LoginHome.css'
+import axios from 'axios';
+import './LoginHome.css';
 
 const Home = () => {
+    const [leaderboard, setLeaderboard] = useState([]);
+
+    useEffect(() => {
+        axios.get('/api/leaderboard')
+            .then(response => {
+                setLeaderboard(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the leaderboard!', error);
+            });
+    }, []);
+
     return (
         <div className="container">
             <div className="greeting">
@@ -13,6 +26,16 @@ const Home = () => {
                 <Link to="/home/typing">
                     <button className="home-button">Go to game</button>
                 </Link>
+            </div>
+            <div className="leaderboard">
+                <h2>Leaderboard</h2>
+                <ul>
+                    {leaderboard.map((entry, index) => (
+                        <li key={index}>
+                            {entry.username}: {entry.score}
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
