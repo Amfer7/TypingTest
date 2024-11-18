@@ -4,16 +4,16 @@ import "./LoginHome.css";
 import User from "../assets/user.png";
 import Pass from "../assets/pass.webp";
 
-const Login = () => {
+const Signup = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loginError, setLoginError] = useState("");
+    const [signupError, setSignupError] = useState("");
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleSignup = async () => {
         const credentials = { username, password };
         try {
-            const response = await fetch("http://localhost:5002/login", {
+            const response = await fetch("http://localhost:5002/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -22,27 +22,22 @@ const Login = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                // Save the token or handle successful login
-                console.log("Login successful:", data);
-            } else if (response.status === 404) {
-                setLoginError("User not found");
+                // Handle successful signup
+                console.log("Signup successful:", data);
+                navigate("/login");
             } else {
                 const error = await response.text();
-                setLoginError(error);
+                setSignupError(error);
             }
         } catch (error) {
-            setLoginError("Server error");
+            setSignupError("Server error");
         }
-    };
-
-    const handleSignup = () => {
-        navigate("/signup");
     };
 
     return (
         <div className="container">
             <div className="header">
-                <div className="text">Login</div>
+                <div className="text">Sign Up</div>
                 <div className="underline"></div>
             </div>
             <div className="inputs">
@@ -64,17 +59,13 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <div className="submitContainer" onClick={handleLogin}>
-                    <button className="submit">Login</button>
+                <div className="submitContainer" onClick={handleSignup}>
+                    <button className="submit">Sign Up</button>
                 </div>
-                {loginError && <div className="error">{loginError}</div>}
-                <div className="signupContainer" onClick={handleSignup}>
-                    <button className="signup">Sign Up</button>
-                </div>
+                {signupError && <div className="error">{signupError}</div>}
             </div>
         </div>
     );
 };
 
-export default Login;
-
+export default Signup;

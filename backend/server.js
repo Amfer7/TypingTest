@@ -3,12 +3,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const User = require('./models/User');
-const Result = require('./models/Result');
+const User = require('./models/users');
+const Result = require('./models/results');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-const port = 5000;
+const port = 5002;
 
 app.use(cors());
 app.use(bodyParser.json());

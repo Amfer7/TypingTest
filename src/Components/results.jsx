@@ -17,7 +17,7 @@ const Results = () => {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://localhost:5000/results/${userId}`)
+      axios.get(`http://localhost:5002/results/${userId}`)
         .then(response => {
           setResults(response.data);
         })
