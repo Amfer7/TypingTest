@@ -96,6 +96,7 @@ app.get('/api/leaderboard', async (req, res) => {
         { $sort: { wpm: -1 }},  // Sort by wpm in descending order
         { $limit: 10 }  // Limit to top 10 users
       ]);
+      console.log(leaderboard);
   
       res.status(200).send(leaderboard);
     } catch (error) {
