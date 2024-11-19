@@ -12,6 +12,7 @@ const Signup = () => {
 
     const handleSignup = async () => {
         const credentials = { username, password };
+        console.log(credentials);
         try {
             const response = await fetch("http://localhost:5002/signup", {
                 method: "POST",

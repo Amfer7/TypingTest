@@ -1,32 +1,34 @@
 // server.js
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const User = require('./models/users');
-const Result = require('./models/results');
-const jwt = require('jsonwebtoken');
+import express from 'express';
+import { connect } from 'mongoose';
+import cors from 'cors';
+import { json } from 'body-parser';
+import User, { findOne } from './models/users';
+import Result, { findOne as _findOne, aggregate } from './models/results';
+import { sign } from 'jsonwebtoken';
 
 const app = express();
 const port = 5002;
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(json());
 
-mongoose.connect('mongodb://localhost:27017/typingtest', {
+connect('mongodb://localhost:27017/typingtest', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const user = new User({ username, password });
-    await user.save();
-    res.status(201).send('User registered successfully');
-  } catch (error) {
-    res.status(400).send('Error registering user');
-  }
+    const { username, password } = req.body;
+    console.log('Request Body:', req.body);  // Log the incoming request body
+    try {
+        const user = new User({ username, password });
+        await user.save();
+        res.status(201).send('User registered successfully');
+    } catch (error) {
+        console.error('Error registering user:', error);  // Log the error
+        res.status(400).send('Error registering user');
+    }
 });
 
 app.post('/login', async (req, res) => {
@@ -38,12 +40,12 @@ app.post('/login', async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ username });
+        const user = await findOne({ username });
         if (!user || !await user.comparePassword(password)) {
             return res.status(400).json({ message: 'Incorrect Username or Password!' });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
+        const token = sign({ id: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
         res.status(200).json({ token });
     } catch (error) {
         console.error('Error during login:', error);
@@ -57,7 +59,7 @@ app.post('/login', async (req, res) => {
 app.post('/results', async (req, res) => {
   const { userId, wpm, mistakes, accuracy } = req.body;
   try {
-    let result = await Result.findOne({ userId });
+    let result = await _findOne({ userId });
     if (!result) {
       result = new Result({ userId, tests: [{ wpm, mistakes, accuracy }] });
     } else {
@@ -73,7 +75,7 @@ app.post('/results', async (req, res) => {
 app.get('/results/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
-    const result = await Result.findOne({ userId });
+    const result = await _findOne({ userId });
     if (!result) {
       return res.status(404).send('Results not found');
     }
@@ -89,7 +91,7 @@ app.listen(port, () => {
 
 app.get('/api/leaderboard', async (req, res) => {
     try {
-      const leaderboard = await Result.aggregate([
+      const leaderboard = await aggregate([
         { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'user' }},
         { $unwind: '$user' },
         { $project: { username: '$user.username', wpm: { $max: '$tests.wpm' } }},  // Get the highest wpm

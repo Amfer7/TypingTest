@@ -5,7 +5,6 @@ import './LoginHome.css';
 
 const Home = () => {
     const [leaderboard, setLeaderboard] = useState([]);
-
     const [error, setError] = useState(null);
     console.log(leaderboard); // Log the leaderboard to see what it is
 
@@ -20,9 +19,6 @@ const Home = () => {
             });
     }, []);
     
-    // In JSX, render the error message if it exists
-    {error && <div className="error">{error}</div>}
-    
     return (
         <div className="container">
             <div className="greeting">
@@ -34,17 +30,22 @@ const Home = () => {
                     <button className="home-button">Go to game</button>
                 </Link>
             </div>
+
+            {/* Display error if exists */}
+            {error && <div className="error">{error}</div>}
+
+            {/* Render leaderboard data if available */}
             <div>
-                {Array.isArray(leaderboard) ? (
-                <ul>
-                    {leaderboard.map((entry, index) => (
-                    <li key={index}>
-                        {entry.username}: {entry.wpm}
-                    </li>
-                    ))}
-                </ul>
+                {Array.isArray(leaderboard) && leaderboard.length > 0 ? (
+                    <ul>
+                        {leaderboard.map((entry, index) => (
+                            <li key={index}>
+                                {entry.username}: {entry.wpm} WPM
+                            </li>
+                        ))}
+                    </ul>
                 ) : (
-                <p>No leaderboard data available</p>
+                    <p>No leaderboard data available</p>
                 )}
             </div>
         </div>
