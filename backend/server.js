@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose, { connect } from 'mongoose'; // I
+import mongoose, { connect } from 'mongoose'; 
 import User from './models/users.js';
 import Result from './models/results.js';
+import Feedback from './models/feedback.js';
 import pkg from 'jsonwebtoken';
-
 
 const { sign } = pkg;
 
@@ -24,7 +24,22 @@ connect('mongodb://localhost:27017/typingtest', {
 });
 
 
-// Routes
+// Routes 
+
+app.post('/feedback', async (req, res) => {
+  const { userId, email, rating, feedback, name } = req.body;
+  console.log('Feedback:', req.body);  // Log the incoming request body
+  try {
+    const newFeedback = new Feedback({ userId, name, email, rating, feedback });
+    await newFeedback.save();
+    res.status(201).send('Feedback submitted successfully');
+  } catch (error) {
+    console.error('Error submitting feedback:', error);
+    res.status(500).send('Error submitting feedback');
+  }
+});
+
+
 app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
   try {

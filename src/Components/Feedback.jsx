@@ -1,18 +1,39 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Feed.css";
-import pass from '../assets/tick2.jpg'
+import pass from '../assets/tick2.jpg';
 
 const Feed = () => {
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setShowPopup(true);
-        setTimeout(() => {
-            navigate("/home");
-        }, 5000);
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const rating = e.target.rating.value;
+        const feedback = e.target.comments.value; // Ensure this is collected correctly
+        const userId = localStorage.getItem('userId');
+
+        // Ensure feedback field name matches the schema
+        const response = await fetch("http://localhost:5002/feedback", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, rating, feedback, userId,name }),
+        });
+
+        if (response.ok) {
+            alert("Feedback submitted successfully");
+            e.target.reset();
+            setShowPopup(true);
+            setTimeout(() => {
+                navigate("/home");
+            }, 5000);
+        } else {
+            alert("Error submitting feedback");
+        }
     };
 
     return (
@@ -46,7 +67,12 @@ const Feed = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="comments">Your Feedback</label>
-                        <textarea id="comments" name="comments" placeholder="Let us know your thoughts, suggestions, or any issues you faced!" required ></textarea>
+                        <textarea
+                            id="comments"
+                            name="comments"
+                            placeholder="Let us know your thoughts, suggestions, or any issues you faced!"
+                            required
+                        ></textarea>
                     </div>
                     <button type="submit">Submit Feedback</button>
                 </form>
