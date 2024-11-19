@@ -5,6 +5,7 @@ import User from './models/users.js';
 import Result from './models/results.js';
 import pkg from 'jsonwebtoken';
 
+
 const { sign } = pkg;
 
 const app = express();
@@ -21,6 +22,7 @@ connect('mongodb://localhost:27017/typingtest', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
 
 // Routes
 app.post('/signup', async (req, res) => {
