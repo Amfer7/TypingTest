@@ -92,8 +92,8 @@ app.get('/api/leaderboard', async (req, res) => {
       const leaderboard = await Result.aggregate([
         { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'user' }},
         { $unwind: '$user' },
-        { $project: { username: '$user.username', wpm: { $max: '$tests.wpm' } }},  // Get the highest wpm
-        { $sort: { wpm: -1 }},  // Sort by wpm in descending order
+        { $project: { username: '$user.username', wpm: { $max: '$tests.wpm' }, accuracy:{$max:'$tests.accuracy'}, mistakes: {$min:'$tests.mistakes'}}},  // Get the highest wpm
+        { $sort: { wpm: -1 ,accuracy:-1}},  // Sort by wpm in descending order
         { $limit: 10 }  // Limit to top 10 users
       ]);
       console.log(leaderboard);
