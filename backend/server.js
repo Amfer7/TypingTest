@@ -1,23 +1,28 @@
-// server.js
 import express from 'express';
-import { connect } from 'mongoose';
 import cors from 'cors';
-import { json } from 'body-parser';
-import User, { findOne } from './models/users';
-import Result, { findOne as _findOne, aggregate } from './models/results';
-import { sign } from 'jsonwebtoken';
+import mongoose, { connect } from 'mongoose'; // I
+import User from './models/users.js';
+import Result from './models/results.js';
+import pkg from 'jsonwebtoken';
+
+const { sign } = pkg;
 
 const app = express();
 const port = 5002;
 
+// Middleware
 app.use(cors());
-app.use(json());
+app.use(express.json());
 
+
+
+// Connect to MongoDB
 connect('mongodb://localhost:27017/typingtest', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
+// Routes
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     console.log('Request Body:', req.body);  // Log the incoming request body
@@ -40,7 +45,7 @@ app.post('/login', async (req, res) => {
     }
 
     try {
-        const user = await findOne({ username });
+        const user = await User.findOne({ username });
         if (!user || !await user.comparePassword(password)) {
             return res.status(400).json({ message: 'Incorrect Username or Password!' });
         }
@@ -53,13 +58,10 @@ app.post('/login', async (req, res) => {
     }
 });
 
-
-
-
 app.post('/results', async (req, res) => {
   const { userId, wpm, mistakes, accuracy } = req.body;
   try {
-    let result = await _findOne({ userId });
+    let result = await Result.findOne({ userId });
     if (!result) {
       result = new Result({ userId, tests: [{ wpm, mistakes, accuracy }] });
     } else {
@@ -75,7 +77,7 @@ app.post('/results', async (req, res) => {
 app.get('/results/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
-    const result = await _findOne({ userId });
+    const result = await Result.findOne({ userId });
     if (!result) {
       return res.status(404).send('Results not found');
     }
@@ -85,13 +87,9 @@ app.get('/results/:userId', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
 app.get('/api/leaderboard', async (req, res) => {
     try {
-      const leaderboard = await aggregate([
+      const leaderboard = await Result.aggregate([
         { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'user' }},
         { $unwind: '$user' },
         { $project: { username: '$user.username', wpm: { $max: '$tests.wpm' } }},  // Get the highest wpm
@@ -103,5 +101,9 @@ app.get('/api/leaderboard', async (req, res) => {
     } catch (error) {
       res.status(500).send('Error fetching leaderboard');
     }
-  });
-  
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
