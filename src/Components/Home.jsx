@@ -13,7 +13,7 @@ const Home = () => {
                 <Link to="/home/typing">
                     <button className="home-button">Go to game</button>
                 </Link>
-                <Link to="/home/typing">
+                <Link to="/home/leader">
                     <button className="home-button">View Leaderboards</button>
                 </Link>
             </div>
