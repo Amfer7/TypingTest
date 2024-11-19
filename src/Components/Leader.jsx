@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import './Leader.css'
+
 
 const Leader = () => {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -17,20 +19,24 @@ const Leader = () => {
   }, []);
 
   return (
-    <div>
-    {Array.isArray(leaderboard) && leaderboard.length > 0 ? (
-        <ul>
-            {leaderboard.map((entry, index) => (
-                <li key={index}>
-                    {entry.username}: {entry.wpm} WPM, Errors: {entry.mistakes}, Accuracy: {entry.accuracy}%
-                </li>
-            ))}
-        </ul>
-    ) : (
-        <p>No leaderboard data available</p>
-    )}
-    {/* Display error if exists */}
-      {error && <div className="error">{error}</div>}
+    <div className='wrapper'>
+        <h1 className='head'>Leaderboards</h1>
+        <div className="conbox">
+            <div className='contents'>
+                {Array.isArray(leaderboard) && leaderboard.length > 0 ? (
+                    <ul>
+                        {leaderboard.map((entry, index) => (
+                            <li key={index}>
+                                {entry.username}: <span>{entry.wpm} WPM</span>, <span>Errors: {entry.mistakes}</span>, <span>Accuracy: {entry.accuracy}%</span>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No leaderboard data available</p>
+                )}
+                {error && <div className="error">{error}</div>}
+            </div>
+        </div>
     </div>
   );
 };

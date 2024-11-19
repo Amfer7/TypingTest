@@ -13,28 +13,9 @@ const Results = () => {
     return () => { document.body.className = ''; };
   }, []);
 
-
-  const saveGame = async () => {
-    const userId = localStorage.getItem('userId'); // Get the stored userId
-
-    if (!userId) {
-        console.error('User ID not found. Please log in again.');
-        return;
-    }
-
-    const response = await fetch('/api/saveResults', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ wpm, mistakes, accuracy, userId })
-    });
-
-    if (response.ok) {
-        navigate('/home/Leader');
-    } else {
-        console.error('Failed to save results');
-    }
-};
-
+  const saveGame = () => {
+    navigate('leader');
+  }
 
   return (
     <div className='wrapper'>
