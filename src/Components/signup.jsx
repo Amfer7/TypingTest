@@ -22,6 +22,7 @@ const Signup = () => {
                 body: JSON.stringify(credentials),
             });
             if (response.ok) {
+                console.log("Response:here", response);
                 const data = await response.json();
                 // Handle successful signup
                 console.log("Signup successful:", data);

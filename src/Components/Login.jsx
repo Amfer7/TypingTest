@@ -9,7 +9,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
     const navigate = useNavigate();
-
+    const [userID, setUserID] = useState(null);
     const handleLogin = async () => {
         const credentials = { username, password };
         try {
@@ -21,9 +21,14 @@ const Login = () => {
                 body: JSON.stringify(credentials),
             });
             if (response.ok) {
-                const data = await response.json();
-                // Save the token (you can store it in localStorage or state if needed)
-                console.log("Login successful:", data);
+                const { token, userId } = await response.json();
+
+            // Store the token and userId in localStorage
+            // In your login logic (e.g., after a successful login)
+                localStorage.setItem('username', username); // Save the username in localStorage
+
+                localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
                 // Redirect to the home page after successful login
                 navigate("/home");
             } else if (response.status === 404) {
