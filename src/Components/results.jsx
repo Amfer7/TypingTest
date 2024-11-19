@@ -14,7 +14,7 @@ const Results = () => {
   }, []);
 
   const saveGame = () => {
-    navigate('leader');
+    navigate('/home/Leader');
   }
 
   return (
