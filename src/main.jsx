@@ -13,6 +13,8 @@ import SignUp from "./Components/signup";
 import Navbar from "./Components/Navbar";
 import Results from "./Components/results";
 import Leader from "./Components/Leader";
+import About from "./Components/About";
+import Feed from "./Components/Feedback"
 
 const Layout = () => (
   <>
@@ -30,6 +32,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/home" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="typing" element={<Typing />} />
+          <Route path="/home/about" element={<About/>} />
+          <Route path="/home/feed" element={<Feed/>} />
           <Route path="/home/typing/results" element={<Results />} />
           <Route path="leader" element={<Leader />} />
           <Route path="logout" element={<Login />} />

@@ -26,10 +26,16 @@ const Navbar = () => {
           <Link to="/home">Home</Link>
         </li>
         <li>
+          <Link to="/home/about">About</Link>
+        </li>
+        <li>
           <Link to="/home/typing">Typing Test</Link>
         </li>
         <li>
           <Link to="/home/leader">Leaderboards</Link>
+        </li>
+        <li>
+          <Link to="/home/feed">Feedback</Link>
         </li>
         <li>
           <Link to="/">Logout</Link>
