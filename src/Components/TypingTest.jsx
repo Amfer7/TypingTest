@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import{ useNavigate } from 'react-router-dom'
-import './TypingTest.css'
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import "./TypingTest.css";
 
 const paragraphs = [
-"Their politician was, in this moment, a notour paperback. The first armless grouse is, in its own way, a gear. The coat is a wash. However, a cake is the llama of a caravan. Snakelike armies show us how playgrounds can be viscoses. Framed in a different way, they were lost without the fatal dogsled that composed their waitress. Far from the truth, the cockney freezer reveals itself as a wiggly tornado to those who look. The first hawklike sack.",
+  "Their politician was, in this moment, a notour paperback. The first armless grouse is, in its own way, a gear. The coat is a wash. However, a cake is the llama of a caravan. Snakelike armies show us how playgrounds can be viscoses. Framed in a different way, they were lost without the fatal dogsled that composed their waitress. Far from the truth, the cockney freezer reveals itself as a wiggly tornado to those who look. The first hawklike sack.",
   "Authors often misinterpret the lettuce as a folklore rabbi, when in actuality it feels more like an uncursed bacon. Pursued distances show us how mother-in-laws can be charleses. Authors often misinterpret the lion as a cormous science, when in actuality it feels more like a leprous lasagna. Recent controversy aside, their band was, in this moment, a racemed suit. The clutch of a joke becomes a togaed chair. The first pickled chess is.",
   "In modern times the first scrawny kitten is, in its own way, an input. An ostrich is the beginner of a roast. An appressed exhaust is a gun of the mind. A recorder is a grade from the right perspective. A hygienic is the cowbell of a skin. Few can name a dun brazil that isn't a highbrow playroom. The unwished beast comes from a thorny oxygen. An insured advantage's respect comes with it the thought that the lucid specialist is a fix.",
   "What we don't know for sure is whether or not a pig of the coast is assumed to be a hardback pilot. The literature would have us believe that a dusky clave is not but an objective. Few can name a limbate leo that isn't a sunlit silver. The bow is a mitten. However, the drawer is a bay. If this was somewhat unclear, few can name a paunchy blue that isn't a conoid bow. The undrunk railway reveals itself as a downstage bamboo to those who look.",
@@ -25,13 +25,14 @@ const paragraphs = [
 ];
 
 const TypingTest = () => {
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
-    document.body.className = 'typing-test-body';
-    return () => {document.body.className = '';};
-    }, []);
+    document.body.className = "typing-test-body";
+    return () => {
+      document.body.className = "";
+    };
+  }, []);
 
   const [text, setText] = useState([]);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -46,14 +47,14 @@ const TypingTest = () => {
 
   useEffect(() => {
     loadParagraph();
-    document.addEventListener('keydown', () => inputRef.current.focus());
+    document.addEventListener("keydown", () => inputRef.current.focus());
   }, []);
 
   const loadParagraph = () => {
     const randomIndex = Math.floor(Math.random() * paragraphs.length);
-    const chars = paragraphs[randomIndex].split("").map(char => ({
+    const chars = paragraphs[randomIndex].split("").map((char) => ({
       char,
-      class: ''
+      class: "",
     }));
     setText(chars);
     setTimeLeft(10);
@@ -68,7 +69,7 @@ const TypingTest = () => {
   const startTimer = () => {
     if (!isTyping) {
       timerRef.current = setInterval(() => {
-        setTimeLeft(prevTime => {
+        setTimeLeft((prevTime) => {
           if (prevTime <= 1) {
             clearInterval(timerRef.current);
             return 0;
@@ -90,26 +91,30 @@ const TypingTest = () => {
       let updatedText = [...text];
       if (typedChar == null) {
         if (charIndex > 0) {
-          setCharIndex(prevIndex => prevIndex - 1);
-          if (updatedText[charIndex - 1].class === 'incorrect') {
-            setMistakes(prevMistakes => prevMistakes - 1);
+          setCharIndex((prevIndex) => prevIndex - 1);
+          if (updatedText[charIndex - 1].class === "incorrect") {
+            setMistakes((prevMistakes) => prevMistakes - 1);
           }
-          updatedText[charIndex - 1].class = '';
+          updatedText[charIndex - 1].class = "";
         }
       } else {
         if (typedChar === currentChar) {
-          updatedText[charIndex].class = 'correct';
+          updatedText[charIndex].class = "correct";
         } else {
-          updatedText[charIndex].class = 'incorrect';
-          setMistakes(prevMistakes => prevMistakes + 1);
+          updatedText[charIndex].class = "incorrect";
+          setMistakes((prevMistakes) => prevMistakes + 1);
         }
-        setCharIndex(prevIndex => prevIndex + 1);
+        setCharIndex((prevIndex) => prevIndex + 1);
       }
       setText(updatedText);
 
-      const calculatedWpm = Math.round(((charIndex - mistakes) / 5) / (60 - timeLeft) * 60);
-      const rawWpm = Math.round((charIndex / 5) / (60 - timeLeft) * 60);
-      const calculatedAccuracy = Math.floor((calculatedWpm * 100) / (rawWpm || 1));
+      const calculatedWpm = Math.round(
+        ((charIndex - mistakes) / 5 / (60 - timeLeft)) * 60
+      );
+      const rawWpm = Math.round((charIndex / 5 / (60 - timeLeft)) * 60);
+      const calculatedAccuracy = Math.floor(
+        (calculatedWpm * 100) / (rawWpm || 1)
+      );
 
       setWpm(calculatedWpm > 0 ? calculatedWpm : 0);
       setAccuracy(calculatedAccuracy > 0 ? calculatedAccuracy : 0);
@@ -124,26 +129,29 @@ const TypingTest = () => {
     clearInterval(timerRef.current);
     inputRef.current.value = "";
   };
-  
+
   const seeResults = () => {
-    navigate('results', { state: { wpm, mistakes, accuracy } });
-  }
-  
+    navigate("results", { state: { wpm, mistakes, accuracy } });
+  };
+
   return (
     <div className="wrapper">
       <h1 className="heading">Typing Test</h1>
-      <input 
-        type="text" 
-        className="input-field" 
-        ref={inputRef} 
+      <input
+        type="text"
+        className="input-field"
+        ref={inputRef}
         onChange={handleTyping}
         disabled={timeLeft === 0}
       />
-      <div className={`content-box ${timeLeft === 0 ? 'blur' : ''}`}>
+      <div className={`content-box ${timeLeft === 0 ? "blur" : ""}`}>
         <div className="typing-text">
           <p>
             {text.map((item, index) => (
-              <span key={index} className={index === charIndex ? 'active' : item.class}>
+              <span
+                key={index}
+                className={index === charIndex ? "active" : item.class}
+              >
                 {item.char}
               </span>
             ))}
@@ -154,12 +162,13 @@ const TypingTest = () => {
           <ul className="result-details">
             <li className="time">
               <p>Time Left:</p>
-              <span><b>{timeLeft}</b>s</span>
+              <span>
+                <b>{timeLeft}</b>s
+              </span>
             </li>
           </ul>
           {timeLeft === 0 && <button onClick={seeResults}>See Results</button>}
           <button onClick={resetGame}>Try Again</button>
-
         </div>
       </div>
     </div>

@@ -35,35 +35,36 @@ app.post('/signup', async (req, res) => {
     res.status(201).send('User registered successfully');
   } catch (error) {
     console.error('Error registering user:', error);  // Log the error
-    res.status(400).send('Error registering user');
+    res.status(500).send('Error registering user');
   }
 });
+
 
 app.post('/login', async (req, res) => {
   console.log('Request Body:', req.body);  // Log the incoming request body
 
   const { username, password } = req.body;
   if (!username || !password) {
-      return res.status(400).json({ message: 'Missing username or password' });
+    return res.status(400).json({ message: 'Missing username or password' });
   }
 
   try {
-      const user = await User.findOne({ username });
-      if (!user || !await user.comparePassword(password)) {
-          return res.status(400).json({ message: 'Incorrect Username or Password!' });
-      }
+    const user = await User.findOne({ username });
+    if (!user || !await user.comparePassword(password)) {
+      return res.status(400).json({ message: 'Incorrect Username or Password!' });
+    }
 
-      const token = sign(
-          { id: user._id }, 
-          process.env.JWT_SECRET || 'your_jwt_secret', 
-          { expiresIn: '1h' }
-      );
+    const token = sign(
+      { id: user._id },
+      process.env.JWT_SECRET || 'your_jwt_secret',
+      { expiresIn: '1h' }
+    );
 
-      // Include the userId in the response
-      res.status(200).json({ token, userId: user._id, username: user.username });
+    // Include the userId in the response
+    res.status(200).json({ token, userId: user._id, username: user.username });
   } catch (error) {
-      console.error('Error during login:', error);
-      res.status(500).json({ message: 'Server error' });
+    console.error('Error during login:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -85,35 +86,22 @@ app.post('/api/saveResults', async (req, res) => {
   }
 });
 
-// app.get('/results/:userId', async (req, res) => {
-//   const { userId } = req.params;
-//   try {
-//     const result = await Result.findOne({ userId });
-//     if (!result) {
-//       return res.status(404).send('Results not found');
-//     }
-//     res.status(200).send(result.tests);
-//   } catch (error) {
-//     console.error('Error fetching results:', error);
-//     res.status(500).send('Server error');
-//   }
-// });
 
 app.get('/api/leaderboard', async (req, res) => {
-    try {
-      const leaderboard = await Result.aggregate([
-        { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'user' }},
-        { $unwind: '$user' },
-        { $project: { username: '$user.username', wpm: { $max: '$tests.wpm' }, accuracy:{$max:'$tests.accuracy'}, mistakes: {$min:'$tests.mistakes'} }},  // Get the highest wpm
-        { $sort: { wpm: -1 }},  // Sort by wpm in descending order
-        { $limit: 10 }  // Limit to top 10 users
-      ]);
-      console.log(leaderboard);
-  
-      res.status(200).send(leaderboard);
-    } catch (error) {
-      res.status(500).send('Error fetching leaderboard');
-    }
+  try {
+    const leaderboard = await Result.aggregate([
+      { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'user' } },
+      { $unwind: '$user' },
+      { $project: { username: '$user.username', wpm: { $max: '$tests.wpm' }, accuracy: { $max: '$tests.accuracy' }, mistakes: { $min: '$tests.mistakes' } } },  // Get the highest wpm
+      { $sort: { wpm: -1 } },  // Sort by wpm in descending order
+      { $limit: 10 }  // Limit to top 10 users
+    ]);
+    console.log(leaderboard);
+
+    res.status(200).send(leaderboard);
+  } catch (error) {
+    res.status(500).send('Error fetching leaderboard');
+  }
 });
 
 // Start the server
