@@ -1,8 +1,7 @@
-// models/Result.js
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const resultSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+const resultSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   tests: [{
     wpm: Number,
     mistakes: Number,
@@ -11,4 +10,4 @@ const resultSchema = new mongoose.Schema({
   }]
 });
 
-module.exports = mongoose.model('Result', resultSchema);
+export default model('Result', resultSchema);
