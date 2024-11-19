@@ -4,8 +4,6 @@ import './Navbar.css';
 import keyboard from '../assets/keyboard.png';
 import User from '../assets/user.png';
 
-
-
 const Navbar = () => {
     return (
         <nav className="navbar">
