@@ -27,7 +27,6 @@ const Login = () => {
 
         localStorage.setItem("token", token);
         localStorage.setItem("userId", userId);
-        // Redirect to the home page after successful login
         navigate("/home");
       } else if (response.status === 404) {
         setLoginError("User not found");
@@ -80,7 +79,7 @@ const Login = () => {
             Sign Up
           </button>
         </div>
-        {loginError && <div className="error">{loginError}</div>}
+        {loginError && <div className="error">Missing username or password.</div>}
       </div>
     </div>
   );

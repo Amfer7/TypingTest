@@ -7,7 +7,7 @@ const Home = () => {
     <div className="container">
       <div className="greeting">
         Welcome To TypeTest!
-        <h6>Test your typing speed and stay on top of the leaderboard.</h6>
+        <h6>Test your typing speed and stay on top of the leaderboard!</h6>
       </div>
       <div className="button-row">
         <Link to="/home/typing">
@@ -15,6 +15,9 @@ const Home = () => {
         </Link>
         <Link to="/home/leader">
           <button className="home-button">View Leaderboards</button>
+        </Link>
+        <Link to="/home/about">
+          <button className="home-button">About the project</button>
         </Link>
       </div>
     </div>

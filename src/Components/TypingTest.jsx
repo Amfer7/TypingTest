@@ -57,7 +57,7 @@ const TypingTest = () => {
       class: "",
     }));
     setText(chars);
-    setTimeLeft(10);
+    setTimeLeft(30);
     setCharIndex(0);
     setMistakes(0);
     setIsTyping(false);

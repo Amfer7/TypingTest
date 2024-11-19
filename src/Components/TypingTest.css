@@ -28,7 +28,7 @@
   width: 1000px;
   max-width: 100%;
   padding: 50px;
-  background: #1e1e1e;
+  background: #1b1b1b;
   border-radius: 20px;
 }
 
@@ -73,7 +73,7 @@
   position: relative;
   letter-spacing: 0.8px;
   word-spacing: 1.2px;
-  color: #818589;
+  color: #a2adb8;
 }
 
 .typing-text p span.correct {
@@ -189,8 +189,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #bb0e0e;
-  font-size: 2rem;
+  color: #f3eded;
+  font-size: 3rem;
   font-weight: bold;
   animation: fadeIn 0.5s ease-in-out;
 }

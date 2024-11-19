@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.feedback-wrapper {
+    margin-top: 200px;
+    max-width: 1000px;
+    padding: 40px;
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    color: #b0e0e6;
+    text-align: center;
+}
+
+.feedback-header h1 {
+    font-size: 60px;
+    color: #0ebbbb;
+    margin-bottom: 35px;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.feedback-header p {
+    font-size: 30px;
+    color: #b0e0e6;
+    margin-bottom: 35px;
+}
+
+.feedback-container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.feedback-container.blur-background {
+    filter: blur(5px);
+    pointer-events: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+
+form label {
+    font-size: 25px;
+    color: #0ebbbb;
+    font-weight: bold;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 20px;
+    color: #fff;
+    background: rgba(50, 50, 50, 0.9);
+    border: 2px solid #0ebbbb;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #bdc014;
+}
+
+form textarea {
+    height: 120px;
+    resize: none;
+}
+
+button {
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1e1e1e;
+    background: #0ebbbb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #ffdd57;
+    color: #000;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: #1e1e1e;
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: #b0e0e6;
+    animation: fadeIn 0.5s ease;
+}
+
+.tick-icon {
+    height: 125px;
+    margin-bottom: 20px;
+    color: transparent;
+}
+
+.popup-content h2 {
+    font-size: 40px;
+    color: #0ebbbb;
+    margin-bottom: 10px;
+}
+
+.popup-content p {
+    font-size: 22px;
+    color: #fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
