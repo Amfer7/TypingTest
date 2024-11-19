@@ -55,8 +55,18 @@
 }
 
 .typing-text p {
-  font-size: 24px;
+  font-size: 25px;
+  line-height: 1.5;
+  color: #bb0e0e;
+ 
+}
+
+.typing-text p .res{
+  font-size: 35px;
   line-height: 1.6;
+  color: #bb0e0e;
+  padding: 20px;
+  padding-bottom: 40px;
 }
 
 .typing-text p span {
@@ -96,7 +106,7 @@
 .content-box .content {
   margin-top: 30px;
   display: flex;
-  padding: 25px 0;
+  padding: 30px 15px;
   justify-content: space-between;
   border-top: 4px solid #bb0e0e;
   border-radius: 3px;
@@ -108,7 +118,7 @@
   width: 120px;
   color: #bb0e0e;
   padding: 12px 0;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 600;
   cursor: pointer;
   border-radius: 15px;
@@ -137,15 +147,15 @@
   height: 25px;
   align-items: center;
   justify-content: center;
+  
 }
 
 .result-details li:not(:first-child) {
-  padding-left: 10px;
-  border-left: 3px solid #bb0e0e;
+  padding-left: 40px;
 }
 
 .result-details li p {
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .result-details li span {
@@ -172,4 +182,31 @@
   background: transparent;
   color: #684444;
   padding-left: 12px;
+}
+
+.times-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #bb0e0e;
+  font-size: 2rem;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.blur .typing-text {
+  filter: blur(3px);
+  position: relative;
 }

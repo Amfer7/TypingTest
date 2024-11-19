@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }  
+
 .navbar {
     position: fixed;
     top: 0;
@@ -10,6 +16,8 @@
     background-color: #333;
     color: #333;
     z-index: 1000; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
 }
 
 .navbar-logo{
@@ -24,10 +32,12 @@
     font-size: 35px;
     padding: 20px;
     color: #333;
+    margin: 0;
 }
 
 .navbar-logo img{
     height: 70px;
+    
 }
 .navbar-links {
     display: flex;
@@ -44,4 +54,22 @@
 
 .navbar-links a:hover {
     color: #3fa8b4;
+}
+
+.logged-in{
+    display: flex;
+    border: none;
+    background: #9b9191;
+    border-radius: 30px;
+    padding: 15px;
+
+}
+.logged-in img{
+    height: 50px;
+}
+
+.logged-in h2{
+    font-size: 25px;
+    display: flex;
+    align-items: center;
 }

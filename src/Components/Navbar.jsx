@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css'; 
-import keyboard from '../assets/keyboard.png'
+import keyboard from '../assets/keyboard.png';
+import User from '../assets/user.png';
+
 
 
 const Navbar = () => {
@@ -14,8 +16,13 @@ const Navbar = () => {
             <ul className="navbar-links">
                 <li><Link to="/home">Home</Link></li>
                 <li><Link to="/home/typing">Typing Test</Link></li>
+                <li><Link to="/home/leader">Leaderboards</Link></li>
                 <li><Link to="/">Logout</Link></li>
             </ul>
+            <div className="logged-in">
+                <img src={User} alt="user" />
+                <h2>User</h2>
+            </div>
         </nav>
     );
 };
